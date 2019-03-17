@@ -1,0 +1,9 @@
+##초기환경 : Windows 10
+설치 Link : https://www.powershellgallery.com/packages/VMware.PowerCLI/11.0.0.10380590
+참고 Link : http://vcloud-lab.com/entries/powercli/installing-vmware-powercli-latest-version-and-error-invalid-server-certificate-set-powercliconfiguration
+
+##Powershell 설정
+1. Set-ExecutionPolicy Unrestricted
+2. Import-Module VMware.PowerCLI
+3. Set-PowerCLIConfiguration -InvalidCertificateAction Ignore -Confirm:$false
+4. 이후 PowerCLI 활용
