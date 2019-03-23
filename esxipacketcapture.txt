@@ -1,0 +1,12 @@
+esxcli network vm list
+esxcli network vm port list -w 22370525
+net-stats -l
+pktcap-uw --switchport 50331692 --dir 1 --proto 0x11 --o pkttx.pcap
+
+
+http://www.vmwarearena.com/how-to-capture-network-trafficpacket-on-esxi-hosts/#Capture_traffic_from_a_virtual_switchport_on_a_dvSwitch
+
+http://blog.ipcraft.net/packet-capture-nsx-troubleshooting-pktcap-uw/
+
+
+
