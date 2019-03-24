@@ -1,1 +1,182 @@
-nsxcli
+VMware NSX CLI Cheat Sheet
+On this page I will be constantly adding VMware NSX CLI commands as an easy reference NSX Cheat Sheet
+
+If you come across some NSX CLI commands that you would like to share with everyone, use the contact us page or leave the commands in the comments below and i’ll be sure to add them to this NSX cheat sheet.
+
+(Updated 15-August-2018)
+
+VMware ESXi Hosts
+esxcli software vib get –vibname esx-nsxv (Displays information relating to NSX datapath and host tools. i.e. Version and Dependencies)
+
+esxcli system module list | grep nsx (List of NSX modules loaded in the host. Displays if the module is Loaded and Enabled)
+
+/etc/init.d/vShield-Stateful-Firewall status (Checks that the vShield-Stateful-Firewall User World Agent (UWA) is running)
+
+/etc/init.d/netcpad status (Checks that the netcpad User World Agent (UWA) is running)
+
+esxcli network ip interface ipv4 get (Displays a list of vmkernel nics, ip address, subnet, broadcast)
+
+esxcli network ip interface list –netstack=vxlan (Displays information on the vmkernel nics that are configured for VXLAN such as MAC Address, Portset, Netstack, VDS Name, MTU)
+
+esxcli network vswitch dvs vmware vxlan list (Displays the VDS that is associated with the ESXi hosts VTEP. Displays VDS name, MTU, segment ID, gateway ID)
+
+esxcli network vswitch dvs vmware vxlan network list –vds-name VDS1 (Displays VXLAN network info with specified VDS. Shows VXLAN ID, Multicast IP, Control Plane, Controller Connection, Port Count, MAC Entry Count, Arp Entry Count, Control Plan Out-Of-Sync status)
+
+esxcli network vswitch dvs vmware vxlan network mac list –vds-name VDS1 –vxlan-id=5002 (Shows MAC address list associated with VDS and VXLAN ID. Displays Inner MAC, Outer MAC, Outer IP and Flags)
+
+esxcli network vswitch dvs vmware vxlan vmknic list –vds-name=VDS1 (Shows VXLAN vmk’s. Displays vmknic name, switch port ID, VDS Port ID, Endpoint ID, VLAN ID, IP address, Netmask, IP Acquire Timeout, Multicast Group Count, Segment ID)
+
+ping -S vxlan -I vmkx <destination IP> (Ping the destination IP using the vxlan stack and Interface vmkx, replace x with your vxlan vmk number)
+
+cat /var/log/vmkernel.log | grep vxlan (Look for keyword vxlan within the ESXi vmkernel.log. Remove | grep vxlan to view the entire log)
+
+cat /var/log/vmksummary.log (View the ESXi vmksummary log)
+
+cat /var/log/vmkwarning.log (View ESXi vmkwarning.log)
+
+nsx cli - vmware esxi logfile locations
+
+NSX Manager
+show version (Shows NSX Manager version)
+
+show system uptime (Shows uptime in days, hours, minutes, seconds)
+
+show tech-support (Show Cisco tech-support info. This command is located within enable mode)
+
+show clock (This command displays the system time and date. This command is located within enable mode)
+
+show filesystems (Shows filesystem, size, used, available and mounts. This command is located within enable mode)
+
+show ethernet (Shows ethernet port settings and statistics)
+
+show log manager follow (Tails the manager log live. Replace follow with reverse to show the logs in reverse time order. Replace follow with last 10 to show the last 10 logs)
+
+show log system follow (Tails the system log live. Replace follow with reverse to show the logs in reverse time order. Replace follow with last 10 to show the last 10 logs)
+
+show log appmgmt follow (Tails the appmgmt log live. Replace follow with reverse to show the logs in reverse time order. Replace follow with last 10 to show the last 10 logs)
+
+show cluster all (Show VMware cluster, datacenter name and firewall status)
+
+show cluster domain-c21 (Show cluster-id domain-c21 VMware cluster, contains hostname, host ID and Install Status)
+
+show host host-247 (Show VMware ESXi Host Id 247 containing VM’s, VM Id and Power Status)
+
+show controller list all (Lists all controllers connected to this NSX Manager. Displays Name, IP Address and State)
+
+show logical-switch list all (Show each logical switch, UUID, VNI and transport zone)
+
+show logical-switch list vni 5002 host (Show hosts on logical switch 5002. Displays Host-ID, Host-Name and VDS Name)
+
+show edge all (Show edge-ID, name, version, size and status of each edge device)
+
+show edge edge-3 version (Show edge-ID edge-3 version, build number and kernel)
+
+show edge edge-3 eventmgr (Show edge-ID edge-3 event manager, displays errors, health status and system events)
+
+show edge edge-3 nat (Shows edge-ID edge-3 NAT rules as well as number of packet matches)
+
+show edge edge-3 arp (Shows edge-ID edge-3 arp cache)
+
+show edge edge-3 flowtable (Shows edge-ID edge-3 current flow table. Which packets are currently flowing through the edge device)
+
+show edge edge-3 firewall (Shows edge-ID edge-3 firewall rules as well as number of packet matches)
+
+show edge edge-3 system network-stats (Shows edge-ID edge-3 network stats including errors)
+
+show edge edge-3 ip ospf (Shows edge-ID edge-3 ospf status)
+
+show edge edge-3 ip bgp (Shows edge-ID edge-3 bgp status)
+
+show edge edge-3 ip route (Shows edge-ID edge-3 routing table)
+
+show edge edge-3 service highavailability (Shows edge-ID edge-3 high availability status)
+
+show edge edge-3 service loadbalancer (Shows edge-ID edge-3 loadbalancer status and statistics)
+
+show logical-router list all (Show logical-router id, name and lifs)
+
+show logical-switch list all (Shows Name, UUID, VNI, Transport Zone Name and ID)
+
+NSX Controller
+show hostname (Displays the hostname of the controller)
+
+show status (Displays version and build, uptime, load average, memory usage and disk filesystem usage)
+
+show version (Displays controller version and build number)
+
+show disk-latency-alert config (Displays alert enabled true or false, low and high watermark settings)
+
+show logs (Displays a list of log files)
+
+show network default-gateway (Displays the default gateway of the controller)
+
+show network dns-servers (Displays nameserver settings)
+
+show network routes (Displays the controller routing table)
+
+show network ntp-servers (Displays NTP server address)
+
+show network ntp-status (Displays NTP status)
+
+show network interfaces (Displays interface name, address and subnet, MTU, Admin-Status and Link-Status)
+
+show control-cluster status (Show active cluster members, configured cluster members and if controller is master or not. Join status, Majority status, Restart Status, Cluster ID and Node UUID)
+
+show control-cluster core stats (Displays messages received and transmitted, connections up and down)
+
+show control-cluster history (Shows controller events)
+
+show control-cluster management address (Displays controller management IP address)
+
+show control-cluster roles (Displays roles running on the controller and whether they are Master or not)
+
+show control-cluster startup-nodes (Displays IP addresses for all other NSX controllers)
+
+show control-cluster logical-routers instance all (Displays LR-Id, LR-Name, In-Sync and Service-Controller IP)
+
+show control-cluster logical-routers connections 0x1389 (Show connections for logical-router ID 0x1389. Displays Id, IP address, Version and Sync-State)
+
+show control-cluster logical-routers interface-summary 0x1389 (Show interface summary for logical-router ID 0x1389. Displays Interface, Type, Id and IP address)
+
+show control-cluster logical-routers routes 0x1389 (Show interface summary for logical-router ID 0x1389. Displays Destination, Next-Hop and Preference)
+
+show control-cluster logical-switches vni 5000 (Show VNI, Controller IP, BUM-Replication, ARP-Proxy and Connections)
+
+show control-cluster logical-switch connection-table 5000 (Hosts connected to this controller for VNI 5000. Displays Host-IP, Port and ID)
+
+show control-cluster logical-switches vtep-table 5000 (Show connected NTEPs for VNI 5000. Displays VNI, VTEP IP, VTEP Segment, MAC Address, Connection-ID, IS-Active and Out-Of-Sync status)
+
+show control-cluster logical-switches mac-table 5000 (Show MAC addresses registered on VNI 5000. Displays VNI, MAC Address, VTEP-IP, Connection-ID)
+
+show control-cluster logical-switches arp-table 5000 (Show ARP records for VNI 5000)
+
+restart system (Reboots the controller)
+
+shutdown system (Shuts down and powers off the controller via the NSX cli)
+
+ping 192.168.1.1 (Ping IP address 192.168.1.1)
+
+traceroute 8.8.8.8 (traceroute to IP address 8.8.8.8)
+
+watch control-cluster history (This is a live view of the controllers history within the NSX cli. Displays date and event logged)
+
+watch log audit/audit.log (This is a live view of the audit.log. Use the command watch logs to get a list of all available logs)
+
+NSX EDGES
+General
+show process monitor (Shows all processes running)
+
+Interfaces
+show interface (Displays a list of all interfaces along with their ip address, speed and duplex settings)
+
+SSL VPN-Plus
+show service sslvpn-plus (Shows basic SSL VPN-Plus info)
+
+show service sslvpn-plus stats (Shows SSL VPN-Plus stats such as authenticated tunnels, bytes sent and received)
+
+show service sslvpn-plus tunnels (Shows VPN tunnel id, user, virtual-ip, client-ip)
+
+show service sslvpn-plus sessions (Shows VPN tunnel id, user and connected time)
+
+Packet Captures
+Debug packet capture interface vNIC_0
