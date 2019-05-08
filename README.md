@@ -8,7 +8,20 @@
 # Kubernetes
 
 
+
+
 # Machine Learning
+
 # DevOps
 # MSA
+
+
+
+# IAC(Infrastructure As Code)
+# Vagrant
+# Ansible
 # ???
+
+
+# NSX
+# vSphere
