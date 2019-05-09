@@ -1,16 +1,24 @@
 # HooniKnowledgeBase
+
 # Cloud Infra
+
 # IaaS
 # Server
-# Switch
+
+# Network
 # Storage
 # Virtualization
-# Kubernetes
 
+# Kubernetes
+# Docker
 
 
 
 # Machine Learning
+# CNN
+# RNN
+
+
 
 # DevOps
 # MSA
@@ -20,8 +28,17 @@
 # IAC(Infrastructure As Code)
 # Vagrant
 # Ansible
-# ???
-
 
 # NSX
 # vSphere
+
+
+
+
+# Neutron
+# OpenFlow
+
+
+
+
+
