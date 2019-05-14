@@ -17,7 +17,7 @@
 # Machine Learning
 # CNN
 # RNN
-
+# Keras
 
 
 # DevOps
@@ -28,6 +28,8 @@
 # IAC(Infrastructure As Code)
 # Vagrant
 # Ansible
+
+
 
 # NSX
 # vSphere
